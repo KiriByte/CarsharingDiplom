@@ -1,5 +1,6 @@
 ﻿using CarsharingProject.Data;
 using CarsharingProject.Models;
+using CarsharingProject.Services;
 using CarsharingProject.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,39 +12,44 @@ namespace CarsharingProject.Controllers
     [Authorize(Roles = "admin, employee")]
     public class CarsTelemetryController : Controller
     {
-
         private readonly ApplicationDbContext _context;
+        private readonly CarTelemetryService _carTelemetryService;
 
-        public CarsTelemetryController(ApplicationDbContext context)
+        public CarsTelemetryController(ApplicationDbContext context,
+            CarTelemetryService carTelemetryService)
         {
             _context = context;
+            _carTelemetryService = carTelemetryService;
         }
 
         public async Task<IActionResult> Index()
         {
-            var connection = new HubConnectionBuilder()
-                .WithUrl("http://192.168.1.69/carshub")
-                .Build();
-
-            await connection.StartAsync();
-
-            var cars = await connection.InvokeAsync<IEnumerable<CarTelemetryWithDBViewModel>>("GetCars");
-
-            await connection.StopAsync();
-
-            foreach (var car in cars)
+            
+            var carsTelemetryList = await _carTelemetryService.GetCarsTelemetry();
+            
+            var cars = new List<CarTelemetryWithDBViewModel>();
+            
+            foreach (var ct in carsTelemetryList)
             {
-                car.AvailableInDB = await _context.RentCars.AnyAsync(c => c.Vin == car.Vin);
+                var carViewModel = new CarTelemetryWithDBViewModel
+                {
+                    Vin = ct.Vin,
+                    Latitude = ct.Latitude,
+                    Longitude = ct.Longitude,
+                    Odometer = ct.Odometer
+                };
+
+                carViewModel.AvailableInDB = await _context.RentCars.AnyAsync(c => c.Vin == ct.Vin);
+
+                cars.Add(carViewModel);
             }
-
-
+            
             return View(cars);
         }
 
         [HttpPost]
         public ActionResult AddCarToDB(string vin)
         {
-
             var car = new RentCarsModel()
             {
                 Vin = vin,
@@ -66,21 +72,5 @@ namespace CarsharingProject.Controllers
 
             return RedirectToAction("Index");
         }
-
-        public async Task<CarTelemetry> GetCarFromBlazorServer(string vin)
-        {
-            var connection = new HubConnectionBuilder()
-                .WithUrl("http://192.168.1.69/carshub")
-                .Build();
-
-            await connection.StartAsync();
-
-            var car = await connection.InvokeAsync<CarTelemetry>("GetCar", vin);
-
-            await connection.StopAsync();
-
-            return car;
-        }
-
     }
 }

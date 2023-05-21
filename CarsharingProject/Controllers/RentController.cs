@@ -127,13 +127,7 @@ public class RentController : Controller
         var minutes = differenceTime.TotalMinutes;
 
 
-        ///ТУТ переделать
-        var connection = new HubConnectionBuilder()
-            .WithUrl("http://192.168.1.69/carshub")
-            .Build();
-        await connection.StartAsync();
-        var carTelemetry = await connection.InvokeAsync<CarTelemetry>("GetCar", rent.RentCar.Vin);
-        await connection.StopAsync();
+        var carTelemetry = await _carTelemetryService.GetCarTelemetry(rent.RentCar.Vin);
 
 
         var kmInRoad = carTelemetry.Odometer - rent.RentOdometerStart;

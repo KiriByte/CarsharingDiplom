@@ -22,12 +22,8 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
-//string telemetryAppName = Environment.GetEnvironmentVariable("TELEMETRY_SERVER");
 string telemetryAppName = Environment.GetEnvironmentVariable("TELEMETRY_SERVER");
-builder.Services.AddSingleton<CarTelemetryService>(provider =>
-{
-    return new CarTelemetryService(telemetryAppName);
-});
+builder.Services.AddSingleton<CarTelemetryService>(_ => new CarTelemetryService(telemetryAppName));
 
 var app = builder.Build();
 
@@ -68,12 +64,9 @@ using (var scope = app.Services.CreateScope())
         }
     }
 
-    List<string> users = new List<string>()
+    List<string> users = new List<string>
     {
-        "kmisyuro@gmail.com", "kmisyuro@gmail.com1", "kmisyuro@gmail.com2", "kmisyuro@gmail.com3",
-        "kmisyuro@gmail.com4",
-        "kmisyuro@gmail.com5", "kmisyuro@gmail.com6", "kmisyuro@gmail.com7", "kmisyuro@gmail.com8",
-        "kmisyuro@gmail.com9"
+        "kmisyuro@gmail.com", "kmisyuro@gmail.com1", "kmisyuro@gmail.com2"
     };
 
     foreach (var user in users)
