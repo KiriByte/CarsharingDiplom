@@ -1,0 +1,56 @@
+@model IEnumerable<CarsharingProject.Models.BankCardModel>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<p>
+    <a asp-action="Create">Добавить карту</a>
+</p>
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            Номер карты
+        </th>
+        <th>
+            Имя держателя карты
+        </th>
+        <th>
+            Месяц окончания карты
+        </th>
+        <th>
+            Год окончания карты
+        </th>
+        <th>
+            CVV
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CardNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CardHolderName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ExpiryMonth)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ExpiryYear)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CVV)
+            </td>
+            <td>
+                <a asp-action="Delete" asp-route-id="@item.CardNumber">Delete</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

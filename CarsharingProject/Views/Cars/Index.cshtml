@@ -1,0 +1,66 @@
+﻿@model IEnumerable<CarsharingProject.Models.RentCarsModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Автомобили в парке</h1>
+
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            Vin
+        </th>
+        <th>
+            Номер авто
+        </th>
+        <th>
+            Арендуется сейчас
+        </th>
+        <th>
+            Доступна для пользователей
+        </th>
+        <th>
+            Стоимость за км
+        </th>
+        <th>
+            Стоимость за минуту
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Vin)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberCar)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsRentNow)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsAvailableForUsers)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PricePerKM)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PricePerMinute)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                @if (User.IsInRole("admin"))
+                {
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                }
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

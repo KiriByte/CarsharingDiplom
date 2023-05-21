@@ -1,0 +1,49 @@
+﻿@using CarsharingProject.ViewModels;
+
+@model IEnumerable<CarTelemetryWithDBViewModel>
+
+<h2>Car Telemetry Details</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Vin</th>
+            <th>Широта</th>
+            <th>Долгота</th>
+            <th>Одометр</th>
+            <th>Наличие в БД</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var telemetry in Model)
+        {
+            <tr>
+                <td>@telemetry.Vin</td>
+                <td>@telemetry.Latitude</td>
+                <td>@telemetry.Longitude</td>
+                <td>@telemetry.Odometer</td>
+                <td><input type="checkbox" disabled @(telemetry.AvailableInDB ? "checked" : "")></td>
+                <td>
+                    @if (telemetry.AvailableInDB)
+                    {
+                        @using (Html.BeginForm("DeleteCarFromDB", "CarsTelemetry", FormMethod.Post))
+                        {
+                            @Html.Hidden("vin", telemetry.Vin)
+                            <input type="submit" value="Удалить" />
+                        }
+                    }
+                    else
+                    {
+                        @using (Html.BeginForm("AddCarToDB", "CarsTelemetry", FormMethod.Post))
+                        {
+                            @Html.Hidden("vin", telemetry.Vin)
+                            <input type="submit" value="Добавить" />
+                        }
+                    }
+                </td>
+                <td></td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,37 @@
+﻿@using CarSimulatorBS.Service
+@using Microsoft.AspNetCore.SignalR
+<h3>CarsTable</h3>
+
+<MudSimpleTable Dense="true">
+    <thead>
+    <tr>
+        <th>VIN</th>
+        <th>Latitude</th>
+        <th>Longitude</th>
+        <th>Odometer</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var car in carService.Cars) // перебираем все машины из сервиса
+    {
+        <tr>
+            <td>@car.Vin</td>
+            <td>@car.Latitude</td>
+            <td>@car.Longitude</td>
+            <td>
+                <input type="number" value="@car.Odometer" @oninput="e => car.Odometer = Convert.ToInt32(e.Value.ToString())"/>
+            </td>
+        </tr>
+    }
+    </tbody>
+</MudSimpleTable >
+
+@code {
+
+    [Inject]
+    private CarService carService { get; set; }
+
+    
+
+
+}

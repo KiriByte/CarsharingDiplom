@@ -1,0 +1,58 @@
+﻿@model CarsharingProject.Models.RentCarsModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Редактор авто</h1>
+
+<hr/>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id"/>
+            <div class="form-group">
+                <label asp-for="Vin" class="control-label"></label>
+                <input asp-for="Vin" class="form-control" readonly/>
+                <span asp-validation-for="Vin" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NumberCar" class="control-label">Номер авто</label>
+                <input asp-for="NumberCar" class="form-control"/>
+                <span asp-validation-for="NumberCar" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsRentNow" readonly/> В аренде сейчас
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsAvailableForUsers"/> Доступна для пользователей
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="PricePerKM" class="control-label">Цена за км</label>
+                <input asp-for="PricePerKM" class="form-control"/>
+                <span asp-validation-for="PricePerKM" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PricePerMinute" class="control-label">Цена за минуту</label>
+                <input asp-for="PricePerMinute" class="form-control"/>
+                <span asp-validation-for="PricePerMinute" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Сохранить" class="btn btn-primary"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Вернуться к списку</a>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

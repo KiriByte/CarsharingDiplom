@@ -1,0 +1,48 @@
+﻿@model List<CarsharingProject.ViewModels.AvailableCarWithCoordViewModel>
+
+<div id="map" style="height: 80vh;"></div>
+
+@section scripts {
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+    <script src="~/js/mapScripts.js"></script>
+
+    @* <script> *@
+    @*     // Вызов функции createMap() после загрузки страницы *@
+    @*     window.onload = function () { *@
+    @*         createMap(); *@
+    @*     }; *@
+    @*      *@
+    @* </script> *@
+<script>
+    var map = L.map('map').setView([53.677839, 23.829529], 11);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+        maxZoom:18,
+        minZoom:11
+    }).addTo(map);
+
+    // Передача данных из модели в JavaScript
+    var availableCars = @Html.Raw(Json.Serialize(Model));
+
+    // Создание меток на основе данных CarTelemetry
+    availableCars.forEach(function (car) {
+            var telemetry = car.carTelemetry;
+    
+            // Создание метки с координатами и всплывающим окном (popup)
+            var marker = L.marker([telemetry.latitude, telemetry.longitude])
+                .bindPopup('<div class="popup-content">' +
+                    '<h5 class="popup-title">' + car.car.numberCar + '</h5>' +
+                    '<p>Стоимость за км: ' + car.car.pricePerKM + ' BYN</p>' +
+                    '<p>Стоимость за минуту: ' + car.car.pricePerMinute + ' BYN</p>' +
+                    '<button class="btn btn-primary" onclick="rentCar(' + car.car.id + ')">Арендовать</button>' +
+                    '</div>')
+                .addTo(map);
+        });
+
+    function rentCar(carId) {
+        window.location.href = '/Rent/NewRent?carId=' + carId;
+    }
+</script>
+}
+

@@ -1,0 +1,93 @@
+﻿@using CarsharingProject.ViewModels;
+
+
+<h2>Пользователи:</h2>
+@if (ViewData["Users"] != null)
+{
+    var users = ViewData["Users"] as List<ApplicationUser>;
+    if (users.Any())
+    {
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Имя пользователя</th>
+                <th>Фото паспорта</th>
+                <th>Фото вод.удостоверения</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var user in users)
+            {
+                <tr>
+                    <td>@user.UserName</td>
+                    <td>
+                        <input type="checkbox" disabled @(string.IsNullOrEmpty(user.PassportPhotoPath) ? "unchecked" : "checked")/>
+                    </td>
+                    <td>
+                        <input type="checkbox" disabled @(string.IsNullOrEmpty(user.DriverLicensePhotoPath) ? "unchecked" : "checked")/>
+                    </td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(user.PassportPhotoPath) && !string.IsNullOrEmpty(user.DriverLicensePhotoPath))
+                        {
+                            <a href="@Url.Action("Verification", new { id = user.Id })">Верификация</a>
+                        }
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>Пользователи не найдены.</p>
+    }
+}
+else
+{
+    <p>Пользователи не найдены.</p>
+}
+
+<h2>Верифицированные пользователи:</h2>
+@if (ViewData["verifiedUsers"] != null)
+{
+    var verifiedUsers = ViewData["verifiedUsers"] as List<ApplicationUser>;
+    if (verifiedUsers.Any())
+    {
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Имя пользователя</th>
+                <th>Фото паспорта</th>
+                <th>Фото вод.удостоверения</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var user in verifiedUsers)
+            {
+                <tr>
+                    <td>@user.UserName</td>
+                    <td>
+                        <input type="checkbox" disabled @(string.IsNullOrEmpty(user.PassportPhotoPath) ? "unchecked" : "checked")/>
+                    </td>
+                    <td>
+                        <input type="checkbox" disabled @(string.IsNullOrEmpty(user.DriverLicensePhotoPath) ? "unchecked" : "checked")/>
+                    </td>
+                    <td>
+                        <a href="@Url.Action("", new { id = user.Id })">Информация</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>Верифицированные пользователи не найдены.</p>
+    }
+}
+else
+{
+    <p>Верифицированные пользователи не найдены.</p>
+}

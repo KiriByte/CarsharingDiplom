@@ -1,0 +1,50 @@
+﻿<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            @{
+                string passportPath = ViewData["passportPath"] as string;
+                @if (!string.IsNullOrEmpty(passportPath))
+                {
+                    <h1>Фото паспорта</h1>
+                    <img src=@passportPath class="img-fluid" alt="Passport Photo">
+                }
+                else
+                {
+                    <h1>Нет загруженных фото паспорта</h1>
+                }
+            }
+            <br />
+            <form asp-controller="UserDocuments" asp-action="UploadPassport" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="file">Выберете файл:</label>
+                    <input type="file" name="file" id="file" class="form-control-file">
+                </div>
+                <br />
+                <button type="submit" class="btn btn-primary">Загрузить</button>
+            </form>
+        </div>
+        <div class="col-md-6">
+            @{
+                string licensePath = ViewData["licensePath"] as string;
+                @if (!string.IsNullOrEmpty(licensePath))
+                {
+                    <h1>Фото вод.удостоверения</h1>
+                    <img src=@licensePath class="img-fluid" alt="Drive License Photo">
+                }
+                else
+                {
+                    <h1>Нет загруженных фото вод.удостоверения</h1>
+                }
+            }
+            <form asp-controller="UserDocuments" asp-action="UploadLicense" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="file">Выберете файл:</label>
+                    <input type="file" name="file" id="file" class="form-control-file">
+                </div>
+                <button type="submit" class="btn btn-primary">Загрузить</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+

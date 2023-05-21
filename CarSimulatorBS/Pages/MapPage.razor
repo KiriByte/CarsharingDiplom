@@ -1,0 +1,67 @@
+﻿@page "/Map"
+@using CarSimulatorBS.Service
+@using CarSimulatorBS.Components
+@using System.Drawing
+@using Color = MudBlazor.Color
+@inject IJSRuntime JSRuntime
+
+<h3>Mappage</h3>
+
+<div id="map" style="height: 500px;"></div>
+
+<MudFab Color="Color.Primary" StartIcon="@Icons.Material.Filled.Add" @onclick="GenerateCars"/>
+<MudFab Color="Color.Secondary" StartIcon="@Icons.Material.Filled.Delete" @onclick="ClearCars" />
+<MudFab Color="Color.Secondary" StartIcon="@Icons.Material.Filled.Save" @onclick="SaveCars" />
+
+<CarsTable/>
+
+<!-- You must wrap the map component in a container setting its actual size. -->
+<div id="mapContainer" style="width: 300px; height: 300px;">
+    <LeafletMap Map="_map" />
+</div>
+
+
+@code {
+
+    [Inject]
+    private CarService carService { get; set; }
+
+    private IJSObjectReference map;
+    
+    private Map _map;
+    private PointF _startAt = new PointF(47.5574007f, 16.3918687f);
+    
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("createMap");
+        }
+        foreach (var car in carService.Cars)
+        {
+            await JSRuntime.InvokeVoidAsync("addMarker", car.Latitude, car.Longitude, car.Vin);
+        }
+    }
+
+
+    public async Task AddMarker(double lat, double lng, string title)
+    {
+        await JSRuntime.InvokeAsync<IJSObjectReference>("addMarker", lat, lng, title);
+    }
+
+    private void GenerateCars()
+    {
+        carService.GenerateNewCars(5);
+    }
+
+    private void ClearCars()
+    {
+        carService.ClearCarsAndDeleteFile();
+    }
+
+    private void SaveCars()
+    {
+        carService.SaveCarsToJson();
+    }
+
+}

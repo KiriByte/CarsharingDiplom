@@ -1,0 +1,36 @@
+version: '3.4'
+
+services:
+  sql-server:
+    container_name: SQLSERVER
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    ports:
+    - "1433:1433"
+    environment:
+      SA_PASSWORD: "Password123!"
+      ACCEPT_EULA: "Y"
+
+  carsimulatorbs:
+    container_name: CarTelemetryServer
+    image: ${DOCKER_REGISTRY-}carsimulatorbs
+    build:
+      context: .
+      dockerfile: CarSimulatorBS/Dockerfile
+    ports:
+    - "81:80"
+
+  carsharingproject:
+    container_name: CarsharingWebApp
+    image: ${DOCKER_REGISTRY-}carsharingproject
+    build:
+      context: .
+      dockerfile: CarsharingProject/Dockerfile
+    depends_on:
+    - sql-server
+    - carsimulatorbs
+    ports:
+    - "82:80"
+    environment:
+      SQL_SERVER: "sql-server"
+      SA_PASSWORD: "Password123!"
+      TELEMETRY_SERVER: "carsimulatorbs"

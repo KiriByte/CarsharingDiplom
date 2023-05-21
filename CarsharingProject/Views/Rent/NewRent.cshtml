@@ -1,0 +1,24 @@
+﻿@model List<BankCardModel>
+
+<h1>Аренда авто @ViewData["CarNumber"]</h1>
+
+
+@if (Model != null && Model.Count > 0)
+{
+    <h3>Выберете банковскую карту для оплаты:</h3>
+    <form method="post" action="RentCar">
+        <input type="hidden" name="carId" value="@ViewData["CarId"]"/>
+        <select class="form-control" name="CardNumber" >
+            @foreach (var card in Model)
+            {
+                <option value="@card.CardNumber">@card.CardNumber</option>
+            }
+        </select>
+        <br/>
+        <button class="btn btn-primary" type="submit">Арендовать</button>
+    </form>
+}
+else
+{
+    <h2 style="color: red">@ViewData["MessageError"]</h2>
+}
