@@ -1,11 +1,11 @@
 ﻿@model List<BankCardModel>
 
-<h1>Аренда авто @ViewData["CarNumber"]</h1>
+<h1>Rent car @ViewData["CarNumber"]</h1>
 
 
 @if (Model != null && Model.Count > 0)
 {
-    <h3>Выберете банковскую карту для оплаты:</h3>
+    <h3>Select your card:</h3>
     <form method="post" action="RentCar">
         <input type="hidden" name="carId" value="@ViewData["CarId"]"/>
         <select class="form-control" name="CardNumber" >
@@ -15,7 +15,7 @@
             }
         </select>
         <br/>
-        <button class="btn btn-primary" type="submit">Арендовать</button>
+        <button class="btn btn-primary" type="submit">Rent</button>
     </form>
 }
 else

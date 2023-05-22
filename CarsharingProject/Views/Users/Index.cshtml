@@ -10,9 +10,9 @@
         <table class="table">
             <thead>
             <tr>
-                <th>Имя пользователя</th>
-                <th>Фото паспорта</th>
-                <th>Фото вод.удостоверения</th>
+                <th>UserName</th>
+                <th>Passport photo</th>
+                <th>Photo of driver's license</th>
                 <th></th>
             </tr>
             </thead>
@@ -30,7 +30,7 @@
                     <td>
                         @if (!string.IsNullOrEmpty(user.PassportPhotoPath) && !string.IsNullOrEmpty(user.DriverLicensePhotoPath))
                         {
-                            <a href="@Url.Action("Verification", new { id = user.Id })">Верификация</a>
+                            <a href="@Url.Action("Verification", new { id = user.Id })">Verification</a>
                         }
                     </td>
                 </tr>

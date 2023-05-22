@@ -4,7 +4,7 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Редактор авто</h1>
+<h1>Edit car</h1>
 
 <hr/>
 <div class="row">
@@ -18,39 +18,39 @@
                 <span asp-validation-for="Vin" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="NumberCar" class="control-label">Номер авто</label>
+                <label asp-for="NumberCar" class="control-label">Number car</label>
                 <input asp-for="NumberCar" class="form-control"/>
                 <span asp-validation-for="NumberCar" class="text-danger"></span>
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsRentNow" readonly/> В аренде сейчас
+                    <input class="form-check-input" asp-for="IsRentNow" readonly/> Is rent now
                 </label>
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsAvailableForUsers"/> Доступна для пользователей
+                    <input class="form-check-input" asp-for="IsAvailableForUsers"/> Available for users
                 </label>
             </div>
             <div class="form-group">
-                <label asp-for="PricePerKM" class="control-label">Цена за км</label>
+                <label asp-for="PricePerKM" class="control-label">Price per km</label>
                 <input asp-for="PricePerKM" class="form-control"/>
                 <span asp-validation-for="PricePerKM" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PricePerMinute" class="control-label">Цена за минуту</label>
+                <label asp-for="PricePerMinute" class="control-label">Price per minute</label>
                 <input asp-for="PricePerMinute" class="form-control"/>
                 <span asp-validation-for="PricePerMinute" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Сохранить" class="btn btn-primary"/>
+                <input type="submit" value="Save" class="btn btn-primary"/>
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Вернуться к списку</a>
+    <a asp-action="Index">Return to list cars</a>
 </div>
 
 @section Scripts {

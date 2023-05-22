@@ -12,6 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 var sqlPassword = Environment.GetEnvironmentVariable("SA_PASSWORD");
 var sqlServer = Environment.GetEnvironmentVariable("SQL_SERVER");
 var connectionString = $"Server={sqlServer};Database=Carsharing;User=sa;Password={sqlPassword};TrustServerCertificate=yes;";
+//var connectionString = $"Server=192.168.1.10;Database=CarsharingProject;User=sa;Password=76sqon9Z;TrustServerCertificate=yes;";
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
@@ -22,6 +23,7 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
+//string telemetryAppName = Environment.GetEnvironmentVariable("TELEMETRY_SERVER");
 string telemetryAppName = Environment.GetEnvironmentVariable("TELEMETRY_SERVER");
 builder.Services.AddSingleton<CarTelemetryService>(_ => new CarTelemetryService(telemetryAppName));
 
@@ -61,31 +63,6 @@ using (var scope = app.Services.CreateScope())
         if (!isInRole)
         {
             await userManager.AddToRoleAsync(adminUser, "admin");
-        }
-    }
-
-    List<string> users = new List<string>
-    {
-        "kmisyuro@gmail.com", "kmisyuro@gmail.com1", "kmisyuro@gmail.com2"
-    };
-
-    foreach (var user in users)
-    {
-        if (await userManager.FindByEmailAsync(user) == null)
-        {
-            var newuser = new ApplicationUser
-            {
-                UserName = user,
-                Email = user,
-                EmailConfirmed = true
-            };
-            await userManager.CreateAsync(newuser, "76sqon9Z!");
-
-            var isInRole = await userManager.IsInRoleAsync(newuser, "user");
-            if (!isInRole)
-            {
-                await userManager.AddToRoleAsync(newuser, "user");
-            }
         }
     }
 

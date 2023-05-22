@@ -53,7 +53,7 @@ namespace CarsharingProject.Controllers
             var car = new RentCarsModel()
             {
                 Vin = vin,
-                NumberCar = "test",
+                NumberCar = "",
                 IsRentNow = false,
                 IsAvailableForUsers = false,
             };

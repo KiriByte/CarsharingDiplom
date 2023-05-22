@@ -28,7 +28,7 @@ public class RentController : Controller
         var car = await _context.RentCars.FindAsync(carId);
         if (car == null)
         {
-            ViewData["MessageError"] = "Неверный ID машины.";
+            ViewData["MessageError"] = "Incorrect Id car.";
             return View("NewRent");
         }
 
@@ -38,7 +38,7 @@ public class RentController : Controller
             .FirstOrDefault(u => u.Id == currentUser.Id)?
             .BankCards
             .ToList();
-        ViewData["MessageError"] = "Нет привязанных карт.";
+        ViewData["MessageError"] = "No linked bank cards.";
         ViewData["CarId"] = carId;
         ViewData["CarNumber"] = car.NumberCar;
         return View(cards);
@@ -49,32 +49,32 @@ public class RentController : Controller
         var car = await _context.RentCars.FindAsync(carId);
         if (car == null)
         {
-            ViewData["MessageError"] = "Неверный ID машины.";
+            ViewData["MessageError"] = "Incorrect Id car.";
             return View("NewRent");
         }
 
         if (!car.IsAvailableForUsers)
         {
-            ViewData["MessageError"] = "Машина недоступна для аренды";
+            ViewData["MessageError"] = "The car is not available for rent";
             return View("NewRent");
         }
 
         if (car.IsRentNow)
         {
-            ViewData["MessageError"] = "Машина занята";
+            ViewData["MessageError"] = "The car is busy";
             return View("NewRent");
         }
 
         if (string.IsNullOrEmpty(CardNumber))
         {
-            ViewData["MessageError"] = "Нет привязанных карт";
+            ViewData["MessageError"] = "No linked bank cards.";
             return View("NewRent");
         }
 
         var user = await _userManager.GetUserAsync(User);
         if (!await _userManager.IsInRoleAsync(user, "verifiedUser"))
         {
-            ViewData["MessageError"] = "Вы не верифицированы.";
+            ViewData["MessageError"] = "You are not verified.";
             return View("NewRent");
         }
 

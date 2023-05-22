@@ -12,7 +12,7 @@
             @using (Html.BeginForm("Verify", "Users", FormMethod.Post))
             {
                 @Html.HiddenFor(m => m.Id)
-                <input type="submit" value="Верифицировать" />
+                <input type="submit" value="Verify" />
             }
         </div>
     </div>
@@ -21,12 +21,12 @@
             @{
                 @if (!string.IsNullOrEmpty(@Model.PassportPhotoPath))
                 {
-                    <h1>Паспорт</h1>
+                    <h1>Passport</h1>
                     <img src=@Model.PassportPhotoPath class="img-fluid" alt="Passport Photo">
                 }
                 else
                 {
-                    <h1>Фото пасспорта не загружено</h1>
+                    <h1>Passport photo not uploaded</h1>
                 }
             }
 
@@ -35,12 +35,12 @@
             @{
                 @if (!string.IsNullOrEmpty(@Model.DriverLicensePhotoPath))
                 {
-                    <h1>Вод.удостоверение</h1>
+                    <h1>Driver's license</h1>
                     <img src=@Model.DriverLicensePhotoPath class="img-fluid" alt="Drive License Photo">
                 }
                 else
                 {
-                    <h1>Фото вод.удостоверения не загружено</h1>
+                    <h1>Photo of driver's license not uploaded</h1>
                 }
             }
         </div>

@@ -5,29 +5,29 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Добавить карту</h1>
+<h1>Add Cart</h1>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="CardNumber" class="control-label">Номер карты </label>
+                <label asp-for="CardNumber" class="control-label">Cart Number </label>
                 <input asp-for="CardNumber" class="form-control" onkeypress="return event.charCode !== 32"/>
                 <span asp-validation-for="CardNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CardHolderName" class="control-label">Имя держателя карты</label>
+                <label asp-for="CardHolderName" class="control-label">Name Holder</label>
                 <input asp-for="CardHolderName" class="form-control" />
                 <span asp-validation-for="CardHolderName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ExpiryMonth" class="control-label">Месяц окончания карты</label>
+                <label asp-for="ExpiryMonth" class="control-label">Expiry Month</label>
                 <input asp-for="ExpiryMonth" class="form-control" />
                 <span asp-validation-for="ExpiryMonth" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ExpiryYear" class="control-label">Год окончания карты</label>
+                <label asp-for="ExpiryYear" class="control-label">Expiry Year</label>
                 <input asp-for="ExpiryYear" class="form-control" />
                 <span asp-validation-for="ExpiryYear" class="text-danger"></span>
             </div>
@@ -45,7 +45,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Вернуться к списку карт</a>
+    <a asp-action="Index">Return to list cards</a>
 </div>
 
 @section Scripts {

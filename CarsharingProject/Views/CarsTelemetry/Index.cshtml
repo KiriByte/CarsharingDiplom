@@ -8,10 +8,10 @@
     <thead>
         <tr>
             <th>Vin</th>
-            <th>Широта</th>
-            <th>Долгота</th>
-            <th>Одометр</th>
-            <th>Наличие в БД</th>
+            <th>Latitude</th>
+            <th>Longitude</th>
+            <th>Odometer</th>
+            <th>Available in park</th>
             <th></th>
         </tr>
     </thead>
@@ -30,7 +30,7 @@
                         @using (Html.BeginForm("DeleteCarFromDB", "CarsTelemetry", FormMethod.Post))
                         {
                             @Html.Hidden("vin", telemetry.Vin)
-                            <input type="submit" value="Удалить" />
+                            <input type="submit" value="Delete" />
                         }
                     }
                     else
@@ -38,7 +38,7 @@
                         @using (Html.BeginForm("AddCarToDB", "CarsTelemetry", FormMethod.Post))
                         {
                             @Html.Hidden("vin", telemetry.Vin)
-                            <input type="submit" value="Добавить" />
+                            <input type="submit" value="Add" />
                         }
                     }
                 </td>

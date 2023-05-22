@@ -5,7 +5,7 @@
     <thead>
         <tr>
             <th>UserName</th>
-            <th>Роль</th>
+            <th>Role</th>
         </tr>
     </thead>
     <tbody>
@@ -18,7 +18,7 @@
                     {
                         @Html.Hidden("UserName", user.UserName)
                         @Html.DropDownList("SelectedRole", new SelectList(user.AllRoles, user.Role))
-                        <input class="btn-primary" type="submit" value="Сохранить" />
+                        <input class="btn-primary" type="submit" value="Save" />
                     }
                 </td>
             </tr>

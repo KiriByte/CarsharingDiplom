@@ -20,40 +20,40 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Правила</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Rules</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Map" asp-action="Index">Карта</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Map" asp-action="Index">Map</a>
                         </li>
                         @if (User.IsInRole("user") || User.IsInRole("verifiedUser"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="BankCards" asp-action="Index">Банковские карты</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="BankCards" asp-action="Index">Bank Cards</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="UserDocuments" asp-action="Index">Документы</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="UserDocuments" asp-action="Index">Documents</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Rent" asp-action="RentHistoryForUser">История аренды</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Rent" asp-action="RentHistoryForUser">Rent history</a>
                             </li>
                         }
                         @if (User.IsInRole("admin") || User.IsInRole("employee"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Cars" asp-action="Index">Авто</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Cars" asp-action="Index">Cars</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">Пользователи</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">Users</a>
                             </li>
 
                         }
                         @if (User.IsInRole("admin"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="UsersWithRoles" asp-action="Index">Роли пользователей</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="UsersWithRoles" asp-action="Index">Users roles</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="CarsTelemetry" asp-action="Index">Телеметрия</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="CarsTelemetry" asp-action="Index">Telemetry</a>
                             </li>
                         }
 

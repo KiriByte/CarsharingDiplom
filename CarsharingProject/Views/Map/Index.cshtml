@@ -33,9 +33,9 @@
             var marker = L.marker([telemetry.latitude, telemetry.longitude])
                 .bindPopup('<div class="popup-content">' +
                     '<h5 class="popup-title">' + car.car.numberCar + '</h5>' +
-                    '<p>Стоимость за км: ' + car.car.pricePerKM + ' BYN</p>' +
-                    '<p>Стоимость за минуту: ' + car.car.pricePerMinute + ' BYN</p>' +
-                    '<button class="btn btn-primary" onclick="rentCar(' + car.car.id + ')">Арендовать</button>' +
+                    '<p>Price per km: ' + car.car.pricePerKM + ' BYN</p>' +
+                    '<p>Price per minute: ' + car.car.pricePerMinute + ' BYN</p>' +
+                    '<button class="btn btn-primary" onclick="rentCar(' + car.car.id + ')">Rent car</button>' +
                     '</div>')
                 .addTo(map);
         });
