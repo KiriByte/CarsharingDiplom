@@ -5,7 +5,7 @@ services:
     container_name: SQLSERVER
     image: mcr.microsoft.com/mssql/server:2022-latest
     ports:
-    - "1433:1433"
+      - "1433:1433"
     environment:
       SA_PASSWORD: "Password123!"
       ACCEPT_EULA: "Y"
@@ -17,7 +17,7 @@ services:
       context: .
       dockerfile: CarSimulatorBS/Dockerfile
     ports:
-    - "81:80"
+      - "81:80"
 
   carsharingproject:
     container_name: CarsharingWebApp
@@ -26,10 +26,10 @@ services:
       context: .
       dockerfile: CarsharingProject/Dockerfile
     depends_on:
-    - sql-server
-    - carsimulatorbs
+      - sql-server
+      - carsimulatorbs
     ports:
-    - "82:80"
+      - "82:80"
     environment:
       SQL_SERVER: "sql-server"
       SA_PASSWORD: "Password123!"

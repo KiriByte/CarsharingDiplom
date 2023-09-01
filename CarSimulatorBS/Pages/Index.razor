@@ -7,35 +7,6 @@
 @code {
     [Inject]
     private NavigationManager NavigationManager { get; set; }
-    // private string pin;
-    // private bool accessAllowed = false;
-    //
-    // private void CheckPin()
-    // {
-    //     if (pin == "3805")
-    //     {
-    //         accessAllowed = true;
-    //         NavigationManager.NavigateTo("Map");
-    //     }
-    //     else
-    //     {
-    //         accessAllowed = false;
-    //         pin = "";
-    //     }
-    // }
-    //
-    // protected override void OnInitialized()
-    // {
-    //     var accessAllowedValue = Session.GetInt32("AccessAllowed");
-    //     if (accessAllowedValue.HasValue && accessAllowedValue.Value == 1)
-    //     {
-    //         accessAllowed = true;
-    //     }
-    //     else
-    //     {
-    //         NavigationManager.NavigateTo("/");
-    //     }
-    // }
 
     protected override void OnInitialized()
     {

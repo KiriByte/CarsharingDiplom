@@ -10,14 +10,14 @@
 <div id="map" style="height: 500px;"></div>
 
 <MudFab Color="Color.Primary" StartIcon="@Icons.Material.Filled.Add" @onclick="GenerateCars"/>
-<MudFab Color="Color.Secondary" StartIcon="@Icons.Material.Filled.Delete" @onclick="ClearCars" />
-<MudFab Color="Color.Secondary" StartIcon="@Icons.Material.Filled.Save" @onclick="SaveCars" />
+<MudFab Color="Color.Secondary" StartIcon="@Icons.Material.Filled.Delete" @onclick="ClearCars"/>
+<MudFab Color="Color.Secondary" StartIcon="@Icons.Material.Filled.Save" @onclick="SaveCars"/>
 
-<CarsTable/>
+<CarsTable Cars="@carService.Cars"/>
 
 <!-- You must wrap the map component in a container setting its actual size. -->
 <div id="mapContainer" style="width: 300px; height: 300px;">
-    <LeafletMap Map="_map" />
+    <LeafletMap Map="_map"/>
 </div>
 
 
@@ -27,15 +27,19 @@
     private CarService carService { get; set; }
 
     private IJSObjectReference map;
-    
+
     private Map _map;
     private PointF _startAt = new PointF(47.5574007f, 16.3918687f);
-    
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
             await JSRuntime.InvokeVoidAsync("createMap");
+        }
+        else
+        {
+            await JSRuntime.InvokeVoidAsync("clearMarkers");
         }
         foreach (var car in carService.Cars)
         {
@@ -43,15 +47,10 @@
         }
     }
 
-
-    public async Task AddMarker(double lat, double lng, string title)
-    {
-        await JSRuntime.InvokeAsync<IJSObjectReference>("addMarker", lat, lng, title);
-    }
-
     private void GenerateCars()
     {
-        carService.GenerateNewCars(5);
+        carService.GenerateNewCars(1);
+        
     }
 
     private void ClearCars()

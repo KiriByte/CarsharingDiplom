@@ -1,5 +1,6 @@
 ﻿@using CarSimulatorBS.Service
 @using Microsoft.AspNetCore.SignalR
+@using CarSimulatorBS.Data
 <h3>CarsTable</h3>
 
 <MudSimpleTable Dense="true">
@@ -12,7 +13,7 @@
     </tr>
     </thead>
     <tbody>
-    @foreach (var car in carService.Cars) // перебираем все машины из сервиса
+    @foreach (var car in Cars) // перебираем все машины из сервиса
     {
         <tr>
             <td>@car.Vin</td>
@@ -28,10 +29,8 @@
 
 @code {
 
-    [Inject]
-    private CarService carService { get; set; }
-
-    
+    [Parameter]
+    public List<Car> Cars { get; set; }
 
 
 }
