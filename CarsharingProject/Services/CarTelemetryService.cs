@@ -25,7 +25,7 @@ public class CarTelemetryService
     {
         return await _hubConnection.InvokeAsync<CarTelemetry>("GetCar", vin);
     }
-    
+
     public async Task<IEnumerable<CarTelemetry>> GetCarsTelemetry()
     {
         return await _hubConnection.InvokeAsync<IEnumerable<CarTelemetry>>("GetCars");

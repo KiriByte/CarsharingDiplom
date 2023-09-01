@@ -6,13 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-//var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
-                       //throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 var sqlPassword = Environment.GetEnvironmentVariable("SA_PASSWORD");
 var sqlServer = Environment.GetEnvironmentVariable("SQL_SERVER");
 var connectionString = $"Server={sqlServer};Database=Carsharing;User=sa;Password={sqlPassword};TrustServerCertificate=yes;";
-//var connectionString = $"Server=192.168.1.10;Database=CarsharingProject;User=sa;Password=76sqon9Z;TrustServerCertificate=yes;";
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
@@ -21,9 +17,9 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options
         => options.SignIn.RequireConfirmedAccount = false)
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
 builder.Services.AddControllersWithViews();
 
-//string telemetryAppName = Environment.GetEnvironmentVariable("TELEMETRY_SERVER");
 string telemetryAppName = Environment.GetEnvironmentVariable("TELEMETRY_SERVER");
 builder.Services.AddSingleton<CarTelemetryService>(_ => new CarTelemetryService(telemetryAppName));
 

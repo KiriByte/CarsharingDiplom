@@ -14,7 +14,8 @@ public class RentController : Controller
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly CarTelemetryService _carTelemetryService;
 
-    public RentController(ApplicationDbContext context,
+    public RentController(
+        ApplicationDbContext context,
         UserManager<ApplicationUser> userManager,
         CarTelemetryService carTelemetryService)
     {

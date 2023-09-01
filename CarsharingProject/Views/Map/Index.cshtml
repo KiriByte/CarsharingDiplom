@@ -7,13 +7,6 @@
     <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
     <script src="~/js/mapScripts.js"></script>
 
-    @* <script> *@
-    @*     // Вызов функции createMap() после загрузки страницы *@
-    @*     window.onload = function () { *@
-    @*         createMap(); *@
-    @*     }; *@
-    @*      *@
-    @* </script> *@
 <script>
     var map = L.map('map').setView([53.677839, 23.829529], 11);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
