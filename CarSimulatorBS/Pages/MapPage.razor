@@ -9,9 +9,12 @@
 
 <div id="map" style="height: 500px;"></div>
 
+<MudTextField @bind-Value="carsToAdd" Style="width: 150px"></MudTextField>
+
 <MudFab Color="Color.Primary" StartIcon="@Icons.Material.Filled.Add" @onclick="GenerateCars"/>
 <MudFab Color="Color.Secondary" StartIcon="@Icons.Material.Filled.Delete" @onclick="ClearCars"/>
 <MudFab Color="Color.Secondary" StartIcon="@Icons.Material.Filled.Save" @onclick="SaveCars"/>
+
 
 <CarsTable Cars="@carService.Cars"/>
 
@@ -31,6 +34,8 @@
     private Map _map;
     private PointF _startAt = new PointF(47.5574007f, 16.3918687f);
 
+    int carsToAdd = 1;
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
@@ -49,8 +54,10 @@
 
     private void GenerateCars()
     {
-        carService.GenerateNewCars(1);
-        
+        if (carsToAdd > 0)
+        {
+            carService.GenerateNewCars(carsToAdd);
+        }
     }
 
     private void ClearCars()
