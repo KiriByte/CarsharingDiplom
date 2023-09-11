@@ -9,6 +9,8 @@ namespace CarsharingProject.Models
     {
         
         [Key]
+        public int Id { get; set; }
+        
         [Required(ErrorMessage = "Card number is required")]
         [CreditCard(ErrorMessage = "Invalid credit card number")]
         public string CardNumber { get; set; }
@@ -26,11 +28,6 @@ namespace CarsharingProject.Models
         [RegularExpression(@"^\d{2}$", ErrorMessage = "Expiry year must be a two-digit number")]
         public string ExpiryYear { get; set; }
 
-        [Required(ErrorMessage = "CVV is required")]
-        [RegularExpression(@"^\d{3}$", ErrorMessage = "CVV must be a three-digit number")]
-        public string CVV { get; set; }
-
-
-        public virtual List<ApplicationUser> Users { get; set; }= new();
+        public virtual UserModel User { get; set; }= new();
     }
 }

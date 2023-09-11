@@ -12,11 +12,11 @@ namespace CarsharingProject.Controllers
     [Authorize(Roles ="admin")]
     public class UsersWithRolesController : Controller
     {
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<UserModel> _userManager;
         private readonly ApplicationDbContext _context;
         private readonly RoleManager<IdentityRole> _roleManager;
 
-        public UsersWithRolesController(UserManager<ApplicationUser> userManager, ApplicationDbContext context, RoleManager<IdentityRole> roleManager)
+        public UsersWithRolesController(UserManager<UserModel> userManager, ApplicationDbContext context, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _context = context;

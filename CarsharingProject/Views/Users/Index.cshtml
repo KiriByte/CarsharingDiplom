@@ -4,7 +4,7 @@
 <h2>Пользователи:</h2>
 @if (ViewData["Users"] != null)
 {
-    var users = ViewData["Users"] as List<ApplicationUser>;
+    var users = ViewData["Users"] as List<UserModel>;
     if (users.Any())
     {
         <table class="table">
@@ -51,7 +51,7 @@ else
 <h2>Верифицированные пользователи:</h2>
 @if (ViewData["verifiedUsers"] != null)
 {
-    var verifiedUsers = ViewData["verifiedUsers"] as List<ApplicationUser>;
+    var verifiedUsers = ViewData["verifiedUsers"] as List<UserModel>;
     if (verifiedUsers.Any())
     {
         <table class="table">

@@ -11,7 +11,7 @@ public class RentModel
     [ForeignKey("CarId")]
     public virtual RentCarsModel RentCar { get; set; }
 
-    public virtual ApplicationUser User { get; set; }
+    public virtual UserModel User { get; set; }
 
     public DateTime RentStartDateTime { get; set; }
 

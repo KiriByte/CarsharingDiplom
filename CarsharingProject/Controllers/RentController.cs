@@ -11,12 +11,12 @@ namespace CarsharingProject.Controllers;
 public class RentController : Controller
 {
     private readonly ApplicationDbContext _context;
-    private readonly UserManager<ApplicationUser> _userManager;
+    private readonly UserManager<UserModel> _userManager;
     private readonly CarTelemetryService _carTelemetryService;
 
     public RentController(
         ApplicationDbContext context,
-        UserManager<ApplicationUser> userManager,
+        UserManager<UserModel> userManager,
         CarTelemetryService carTelemetryService)
     {
         _context = context;

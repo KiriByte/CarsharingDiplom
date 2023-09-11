@@ -45,10 +45,7 @@
                 @Html.DisplayFor(modelItem => item.ExpiryYear)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CVV)
-            </td>
-            <td>
-                <a asp-action="Delete" asp-route-id="@item.CardNumber">Delete</a>
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
     }

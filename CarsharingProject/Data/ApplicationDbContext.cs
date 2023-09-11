@@ -4,12 +4,12 @@ using CarsharingProject.Models;
 
 namespace CarsharingProject.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class ApplicationDbContext : IdentityDbContext<UserModel>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
-            Database.Migrate();
+           Database.Migrate();
         }
         public DbSet<BankCardModel> BankCards{ get; set; }
         public DbSet<RentCarsModel> RentCars { get; set; }

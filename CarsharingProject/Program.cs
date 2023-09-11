@@ -1,4 +1,5 @@
 using CarsharingProject.Data;
+using CarsharingProject.Interfaces;
 using CarsharingProject.Models;
 using CarsharingProject.Services;
 using Microsoft.AspNetCore.Identity;
@@ -6,14 +7,36 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+string? secretSqlPassword = builder.Configuration.GetValue<string?>("SA_PASSWORD");
+string? secretSqlServer = builder.Configuration.GetValue<string?>("SQL_SERVER");
+string? secretTelemetryServer = builder.Configuration.GetValue<string?>("TELEMETRY_SERVER");
+if (secretSqlPassword != null)
+{
+    Environment.SetEnvironmentVariable("SA_PASSWORD", secretSqlPassword);
+}
+
+if (secretSqlServer != null)
+{
+    Environment.SetEnvironmentVariable("SQL_SERVER", secretSqlServer);
+}
+
+if (secretTelemetryServer != null)
+{
+    Environment.SetEnvironmentVariable("TELEMETRY_SERVER", secretTelemetryServer);
+}
+
 var sqlPassword = Environment.GetEnvironmentVariable("SA_PASSWORD");
 var sqlServer = Environment.GetEnvironmentVariable("SQL_SERVER");
-var connectionString = $"Server={sqlServer};Database=Carsharing;User=sa;Password={sqlPassword};TrustServerCertificate=yes;";
+var connectionString =
+    $"Server={sqlServer};Database=Carsharing;User=sa;Password={sqlPassword};TrustServerCertificate=yes;";
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
+
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<ApplicationUser>(options
+builder.Services.AddDefaultIdentity<UserModel>(options
         => options.SignIn.RequireConfirmedAccount = false)
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -23,12 +46,14 @@ builder.Services.AddControllersWithViews();
 string telemetryAppName = Environment.GetEnvironmentVariable("TELEMETRY_SERVER");
 builder.Services.AddSingleton<CarTelemetryService>(_ => new CarTelemetryService(telemetryAppName));
 
+builder.Services.AddTransient<IBankCard, BankCardService>();
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
 {
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<UserModel>>();
     List<string> roles = new()
     {
         "admin", "employee", "user", "verifiedUser"
@@ -47,7 +72,7 @@ using (var scope = app.Services.CreateScope())
 
     if (await userManager.FindByEmailAsync("admin@test.com") == null)
     {
-        var adminUser = new ApplicationUser
+        var adminUser = new UserModel()
         {
             UserName = "admin@test.com",
             Email = "admin@test.com",

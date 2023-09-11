@@ -12,9 +12,9 @@ namespace CarsharingProject.Controllers
     public class UsersController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<UserModel> _userManager;
 
-        public UsersController(UserManager<ApplicationUser> userManager)
+        public UsersController(UserManager<UserModel> userManager)
         {
             _userManager = userManager;
         }

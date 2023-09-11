@@ -11,10 +11,10 @@ namespace CarsharingProject.Controllers
     [Authorize(Roles = "user,verifiedUser")]
     public class UserDocumentsController : Controller
     {
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<UserModel> _userManager;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public UserDocumentsController(UserManager<ApplicationUser> userManager, IWebHostEnvironment webHostEnvironment)
+        public UserDocumentsController(UserManager<UserModel> userManager, IWebHostEnvironment webHostEnvironment)
         {
             _userManager = userManager;
             _webHostEnvironment = webHostEnvironment;

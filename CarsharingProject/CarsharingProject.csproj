@@ -49,8 +49,5 @@
     <_ContentIncludedByDefault Remove="wwwroot\Documents\Passport\cd7e1495-0d07-4132-ae4d-dcdca5c7f360_passport.jpg" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Migrations" />
-  </ItemGroup>
 
 </Project>

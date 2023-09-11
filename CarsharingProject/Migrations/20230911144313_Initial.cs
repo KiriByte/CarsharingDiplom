@@ -53,21 +53,6 @@ namespace CarsharingProject.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "BankCards",
-                columns: table => new
-                {
-                    CardNumber = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    CardHolderName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ExpiryMonth = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ExpiryYear = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CVV = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BankCards", x => x.CardNumber);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "RentCars",
                 columns: table => new
                 {
@@ -77,7 +62,8 @@ namespace CarsharingProject.Migrations
                     NumberCar = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsRentNow = table.Column<bool>(type: "bit", nullable: false),
                     IsAvailableForUsers = table.Column<bool>(type: "bit", nullable: false),
-                    PricePerKM = table.Column<double>(type: "float", nullable: false)
+                    PricePerKM = table.Column<double>(type: "float", nullable: false),
+                    PricePerMinute = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -191,27 +177,25 @@ namespace CarsharingProject.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ApplicationUserBankCardModel",
+                name: "BankCards",
                 columns: table => new
                 {
-                    BankCardsCardNumber = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    UsersId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CardNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CardHolderName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ExpiryMonth = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ExpiryYear = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ApplicationUserBankCardModel", x => new { x.BankCardsCardNumber, x.UsersId });
+                    table.PrimaryKey("PK_BankCards", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ApplicationUserBankCardModel_AspNetUsers_UsersId",
-                        column: x => x.UsersId,
+                        name: "FK_BankCards_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ApplicationUserBankCardModel_BankCards_BankCardsCardNumber",
-                        column: x => x.BankCardsCardNumber,
-                        principalTable: "BankCards",
-                        principalColumn: "CardNumber",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -220,10 +204,12 @@ namespace CarsharingProject.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Vin = table.Column<int>(type: "int", nullable: false),
+                    CarId = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     RentStartDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     RentEndDateTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    RentOdometerStart = table.Column<int>(type: "int", nullable: false),
+                    RentOdometerEnd = table.Column<int>(type: "int", nullable: true),
                     TotalPrice = table.Column<double>(type: "float", nullable: true)
                 },
                 constraints: table =>
@@ -235,17 +221,12 @@ namespace CarsharingProject.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_RentHistory_RentCars_Vin",
-                        column: x => x.Vin,
+                        name: "FK_RentHistory_RentCars_CarId",
+                        column: x => x.CarId,
                         principalTable: "RentCars",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ApplicationUserBankCardModel_UsersId",
-                table: "ApplicationUserBankCardModel",
-                column: "UsersId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -287,22 +268,24 @@ namespace CarsharingProject.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RentHistory_UserId",
-                table: "RentHistory",
+                name: "IX_BankCards_UserId",
+                table: "BankCards",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RentHistory_Vin",
+                name: "IX_RentHistory_CarId",
                 table: "RentHistory",
-                column: "Vin");
+                column: "CarId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RentHistory_UserId",
+                table: "RentHistory",
+                column: "UserId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "ApplicationUserBankCardModel");
-
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -319,10 +302,10 @@ namespace CarsharingProject.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "RentHistory");
+                name: "BankCards");
 
             migrationBuilder.DropTable(
-                name: "BankCards");
+                name: "RentHistory");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
